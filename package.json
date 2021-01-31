@@ -1,5 +1,5 @@
 {
-  "name": "fc",
+  "name": "one-pager",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,9 +8,29 @@
     "start": "next start"
   },
   "dependencies": {
+    "fuse": "^0.4.0",
     "isomorphic-fetch": "^3.0.0",
     "next": "10.0.5",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
-  }
+    "react-dom": "17.0.1",
+    "react-search-field": "^1.2.0",
+    "swr": "^0.4.1"
+  },
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/applegreengrape/bizInfo.git"
+  },
+  "keywords": [
+    "company",
+    "info",
+    "search"
+  ],
+  "author": "pingzhou.liu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/applegreengrape/bizInfo/issues"
+  },
+  "homepage": "https://github.com/applegreengrape/bizInfo#readme"
 }
