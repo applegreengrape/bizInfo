@@ -1,5 +1,5 @@
-// import Head from 'next/head'
-// import styles from '../styles/Home.module.css'
+import Head from 'next/head'
+import styles from '../styles/Home.module.css'
 import React, { useState } from 'react';
 import fetch from 'isomorphic-fetch';
 import SearchBar from "material-ui-search-bar";
@@ -10,10 +10,10 @@ class Home extends React.Component {
     constructor(props) {
       super(props);
       this.state = {value: '600000'};
-      this.state = {result: [
+      this.state = {profile: [
           "600000",
           "上海",
-          "🏦 浦发银行 🏦",
+          "浦发银行",
           "SPD BANK",
           "上海市中山东一路12号"
       ]};
@@ -31,7 +31,7 @@ class Home extends React.Component {
                 }
               });
             const data = await res.json();
-            this.setState({result : [
+            this.setState({profile : [
                 data.CODE,
                 data.Area,
                 data.CompanyName,
@@ -39,29 +39,50 @@ class Home extends React.Component {
                 data.CompanyAddr
             ]})
         }catch (e) {
-            console.log(e)
+            alert(e)
         };
     };
 
     render() {
     return (
-        <div>
-        <h1>📇 company profile</h1>
-          <label>
-          <SearchBar
-            value={this.state.value}
-            onChange={(newValue) => this.setState({ value: newValue })}
-            onRequestSearch={() => this.handleSearch(this.state.value)}
-            />
-          </label>
-          <ul>sse code: { this.state.result[0] }</ul>
-          <ul>city: { this.state.result[1] }</ul>
-          <ul>company name: { this.state.result[2] }</ul>
-          <ul>company english name: { this.state.result[3] }</ul>
-          <ul>company address: { this.state.result[4] }</ul>
+        <div className={styles.container}>
+            <Head>
+                <title>
+                📇 company profile 🇨🇳
+                </title>
+            </Head>
+            <main>
+                <h1 className={styles.title}>📇 company profile 🇨🇳</h1>
+                <label className={styles.searchbar}>
+                <SearchBar
+                    placeholder="Search SSE (Shanghai Stock Exchange) listed company number (i.e. 600000)"
+                    value={this.state.value}
+                    onChange={(newValue) => this.setState({ value: newValue })}
+                    onRequestSearch={() => this.handleSearch(this.state.value)}
+                />
+            </label>
+            <div className={styles.grid}>
+                <a className={styles.card}>
+                    <h4>Basic Info:</h4>
+                    <p>SSE Code: { this.state.profile[0] }</p>
+                    <p>City: { this.state.profile[1] }</p>
+                    <p>Company Name: { this.state.profile[2] }</p>
+                    <p>Company English Name: { this.state.profile[3] }</p>
+                    <p>Company Address: { this.state.profile[4] }</p>
+                </a>
+                <a className={styles.card}>
+                    <h4>Company Announcements:</h4>
+                    <p>place holder for announcements</p>
+                </a>
+                <a className={styles.card}>
+                    <h4>Company Court Records:</h4>
+                    <p>place holder for court records</p>
+                </a>
+            </div>
 
+            </main>
+            
         </div>
-
     );
     }
 };
