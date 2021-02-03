@@ -3,13 +3,55 @@ import styles from '../styles/Home.module.css'
 import React, { useState } from 'react';
 import fetch from 'isomorphic-fetch';
 import SearchBar from "material-ui-search-bar";
+import Rating from '@material-ui/lab/Rating';
+
+import PropTypes from 'prop-types';
+import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
+import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
+import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAltOutlined';
+import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 
 const HOST_NAME = process.env.HOST_NAME || 'http://localhost:8080/events';
 
+const customIcons = {
+    1: {
+      icon: <SentimentVeryDissatisfiedIcon />,
+      label: 'Very Dissatisfied',
+    },
+    2: {
+      icon: <SentimentDissatisfiedIcon />,
+      label: 'Dissatisfied',
+    },
+    3: {
+      icon: <SentimentSatisfiedIcon />,
+      label: 'Neutral',
+    },
+    4: {
+      icon: <SentimentSatisfiedAltIcon />,
+      label: 'Satisfied',
+    },
+    5: {
+      icon: <SentimentVerySatisfiedIcon />,
+      label: 'Very Satisfied',
+    },
+  };
+  
+function IconContainer(props) {
+    const { value, ...other } = props;
+    return <span {...other}>{customIcons[value].icon}</span>;
+  }
+  
+IconContainer.propTypes = {
+    value: PropTypes.number.isRequired,
+  };
+  
+  
 class Home extends React.Component {
     constructor(props) {
       super(props);
       this.state = {value: '600000'};
+      this.state = {rate: ''};
       this.state = {profile: [
           "600000",
           "上海",
@@ -42,7 +84,8 @@ class Home extends React.Component {
             alert(e)
         };
     };
-
+    
+    state = {rate: 0};
     render() {
     return (
         <div className={styles.container}>
@@ -79,12 +122,23 @@ class Home extends React.Component {
                     <p>place holder for court records</p>
                 </a>
             </div>
-
             </main>
-            
+        <div className={styles.footer}>
+            <a>Do you find this useful?  &nbsp;&nbsp;</a>
+            <Rating
+                name="customized-icons"
+                defaultValue={3}
+                getLabelText={(value) => customIcons[value].label}
+                onChange={(event, newValue) => {
+                    console.log(`Someone rated it as: ${newValue}`);
+                  }}
+                IconContainerComponent={IconContainer}
+            />
+        </div>
         </div>
     );
     }
 };
+
 
 export default Home;
